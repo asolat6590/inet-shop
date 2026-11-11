@@ -117,7 +117,7 @@ function formatUzs(amount) {
 /**
  * Sends order notification and receipt image to store manager's Telegram account
  */
-export async function sendOrderToOwner(order, receiptFilePath = null) {
+export async function sendOrderToOwner(order, receiptPhoto = null, fileOptions = { filename: 'receipt.jpg', contentType: 'image/jpeg' }) {
   const managerChatId = getManagerChatId();
   const bot = initTelegramBot();
 
@@ -157,8 +157,8 @@ export async function sendOrderToOwner(order, receiptFilePath = null) {
     }).filter(Boolean).join('\n');
   }
 
-  const receiptNoticeHtml = receiptFilePath ? '\n📸 <b>ЧЕК ОБ ОПЛАТЕ ПРИКРЕПЛЕН</b>' : '';
-  const receiptNoticePlain = receiptFilePath ? '\n[ЧЕК ОБ ОПЛАТЕ ПРИКРЕПЛЕН]' : '';
+  const receiptNoticeHtml = (receiptPhoto || order.receipt_url) ? '\n📸 <b>ЧЕК ОБ ОПЛАТЕ ПРИКРЕПЛЕН</b>' : '';
+  const receiptNoticePlain = (receiptPhoto || order.receipt_url) ? '\n[ЧЕК ОБ ОПЛАТЕ ПРИКРЕПЛЕН]' : '';
 
   const customerTgDisplay = order.customer_tg && order.customer_tg.trim()
     ? '@' + order.customer_tg.replace('@', '').trim()
@@ -198,12 +198,15 @@ ${itemsPlainList || '- Комплектующие'}
 `.trim();
 
   // Telegram Inline Action buttons for the manager
-  const inlineKeyboard = [
-    [
-      { text: '✅ Подтвердить оплату', callback_data: `confirm_order:${order.order_number}` },
-      { text: '❌ Отклонить', callback_data: `reject_order:${order.order_number}` }
-    ]
+  const actionRow = [
+    { text: '✅ Подтвердить оплату', callback_data: `confirm_order:${order.order_number}` },
+    { text: '❌ Отклонить', callback_data: `reject_order:${order.order_number}` }
   ];
+  if (order.receipt_url && order.receipt_url.startsWith('http')) {
+    actionRow.push({ text: '📸 Чек онлайн', url: order.receipt_url });
+  }
+
+  const inlineKeyboard = [actionRow];
 
   if (order.customer_tg && order.customer_tg.trim()) {
     const handle = order.customer_tg.replace(/[@\s]/g, '');
@@ -216,21 +219,21 @@ ${itemsPlainList || '- Комплектующие'}
 
   if (bot && managerChatId) {
     try {
-      if (receiptFilePath) {
+      if (receiptPhoto) {
         try {
           if (htmlMessage.length <= 1024) {
-            await bot.sendPhoto(managerChatId, receiptFilePath, {
+            await bot.sendPhoto(managerChatId, receiptPhoto, {
               caption: htmlMessage,
               parse_mode: 'HTML',
               reply_markup: { inline_keyboard: inlineKeyboard }
-            });
+            }, fileOptions);
           } else {
             await bot.sendMessage(managerChatId, htmlMessage, { parse_mode: 'HTML' });
-            await bot.sendPhoto(managerChatId, receiptFilePath, {
+            await bot.sendPhoto(managerChatId, receiptPhoto, {
               caption: `📸 <b>Чек об оплате к заказу #${escapeHtml(order.order_number)}</b> (${formatUzs(order.total_uzs)})`,
               parse_mode: 'HTML',
               reply_markup: { inline_keyboard: inlineKeyboard }
-            });
+            }, fileOptions);
           }
         } catch (photoErr) {
           console.warn('[Telegram Bot] Failed to send photo, falling back to message:', photoErr.message);

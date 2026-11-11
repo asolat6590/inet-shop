@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import { fileURLToPath } from 'url';
 import db from '../db/index.js';
 import { sendOrderToOwner, getSetting } from '../services/telegramBot.js';
@@ -34,7 +35,8 @@ router.post('/orders', async (req, res) => {
 
     // Handle receipt upload to Neon Object Storage
     let receiptUrl = null;
-    let receiptFilePath = null;
+    let receiptBuffer = null;
+    let fileOptions = null;
 
     if (receipt_base64 && typeof receipt_base64 === 'string') {
       try {
@@ -50,29 +52,42 @@ router.post('/orders', async (req, res) => {
         }
 
         const fileName = `receipt-${orderNumber}.${ext}`;
-        const fileBuffer = Buffer.from(base64Data, 'base64');
+        receiptBuffer = Buffer.from(base64Data, 'base64');
+        fileOptions = { filename: fileName, contentType: mimeType };
 
         // 1. Upload to Neon Object Storage
         try {
           const storageRes = await uploadToStorage({
-            buffer: fileBuffer,
+            buffer: receiptBuffer,
             key: `receipts/${fileName}`,
             contentType: mimeType
           });
-          // Generate a presigned URL or public storage URL
-          receiptUrl = storageRes.url;
+          // Also generate a presigned URL valid for 7 days so anyone with the link can view it
+          try {
+            receiptUrl = await getStoragePresignedUrl({
+              key: `receipts/${fileName}`,
+              expiresIn: 604800 // 7 days
+            });
+          } catch (signErr) {
+            receiptUrl = storageRes.url;
+          }
           console.log(`[Neon Object Storage] Uploaded receipt ${fileName} -> ${receiptUrl}`);
         } catch (storageErr) {
           console.error('[Neon Object Storage] Upload failed, falling back:', storageErr.message);
         }
 
-        // 2. Also keep local copy for Telegram sendPhoto
-        const receiptsDir = path.join(__dirname, '..', '..', 'uploads', 'receipts');
-        if (!fs.existsSync(receiptsDir)) {
-          fs.mkdirSync(receiptsDir, { recursive: true });
+        // 2. Safe local write (non-fatal if read-only on serverless)
+        try {
+          const baseUploadsDir = process.env.VERCEL
+            ? path.join(os.tmpdir(), 'receipts')
+            : path.join(__dirname, '..', '..', 'uploads', 'receipts');
+          if (!fs.existsSync(baseUploadsDir)) {
+            fs.mkdirSync(baseUploadsDir, { recursive: true });
+          }
+          fs.writeFileSync(path.join(baseUploadsDir, fileName), receiptBuffer);
+        } catch (fsErr) {
+          // Non-fatal on serverless environments
         }
-        receiptFilePath = path.join(receiptsDir, fileName);
-        fs.writeFileSync(receiptFilePath, fileBuffer);
 
         if (!receiptUrl) {
           receiptUrl = `/uploads/receipts/${fileName}`;
@@ -103,8 +118,8 @@ router.post('/orders', async (req, res) => {
 
     const createdOrder = await db.prepare('SELECT * FROM orders WHERE order_number = ?').get(orderNumber);
 
-    // Send Telegram Notification & Receipt to Owner/Manager
-    const tgResult = await sendOrderToOwner(createdOrder, receiptFilePath);
+    // Send Telegram Notification & Receipt directly as Buffer to Manager
+    const tgResult = await sendOrderToOwner(createdOrder, receiptBuffer, fileOptions);
 
     // Payment details from settings
     const storePhone = getSetting('store_phone', '+998 (90) 123-45-67');
