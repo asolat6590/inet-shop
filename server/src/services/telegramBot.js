@@ -57,9 +57,10 @@ export function initTelegramBot() {
       botInstance.stopPolling();
     }
 
-    botInstance = new TelegramBot(token, { polling: true });
+    const isServerless = !!process.env.VERCEL;
+    botInstance = new TelegramBot(token, { polling: !isServerless });
     currentToken = token;
-    console.log('[Telegram Bot] Initialized successfully with polling enabled.');
+    console.log(`[Telegram Bot] Initialized successfully with polling ${!isServerless ? 'enabled' : 'disabled (serverless mode)'}.`);
 
     // Handle bot commands
     botInstance.onText(/\/start/, (msg) => {
