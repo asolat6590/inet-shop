@@ -1,0 +1,169 @@
+{
+  "nav": {
+    "brand": "CYBERPULSE",
+    "catalog": "Каталог",
+    "builder": "Конструктор ПК",
+    "fpsCalculator": "Тест FPS (20 игр)",
+    "cart": "Корзина",
+    "admin": "Админ-панель",
+    "secretAdmin": "Скрытый вход"
+  },
+  "hero": {
+    "badge": "Новое поколение гейминга в Узбекистане",
+    "title1": "Собери компьютер мечты",
+    "title2": "с живой визуализацией",
+    "subtitle": "Интерактивный конструктор, расчет FPS в 20 самых тяжелых играх, проверка совместимости деталей и прямая оплата через Telegram.",
+    "startBuilding": "Открыть конструктор",
+    "exploreCatalog": "Смотреть каталог",
+    "testFps": "Рассчитать FPS в играх"
+  },
+  "currency": "сум",
+  "catalog": {
+    "title": "Каталог комплектующих",
+    "subtitle": "Оригинальные компоненты с официальной гарантией. Цены в сумах.",
+    "allCategories": "Все категории",
+    "searchPlaceholder": "Поиск комплектующих по модели, бренду...",
+    "filterBy": "Фильтры",
+    "priceRange": "Ценовой диапазон",
+    "sortBy": "Сортировка",
+    "sortNewest": "Сначала новинки",
+    "sortPriceAsc": "Сначала недорогие",
+    "sortPriceDesc": "Сначала премиальные",
+    "sortPerf": "По мощности",
+    "inStock": "В наличии",
+    "outOfStock": "Под заказ",
+    "addToCart": "В корзину",
+    "addToBuilder": "В сборку",
+    "viewDetails": "Характеристики",
+    "emptyResults": "Товаров по заданным фильтрам не найдено."
+  },
+  "categories": {
+    "case": "Корпус",
+    "cpu": "Процессор",
+    "motherboard": "Материнская плата",
+    "cooler": "Кулер / СЖО",
+    "ram": "Оперативная память",
+    "gpu": "Видеокарта",
+    "storage": "Накопитель M.2 / SSD",
+    "psu": "Блок питания"
+  },
+  "builder": {
+    "title": "Интерактивный Конструктор ПК",
+    "subtitle": "Собери свою конфигурацию шаг за шагом и наблюдай за сборкой в реальном времени",
+    "visualizerTitle": "Визуализация сборки",
+    "selectComponent": "Выбрать деталь",
+    "changeComponent": "Заменить",
+    "removeComponent": "Удалить",
+    "emptySlot": "Не выбрано",
+    "totalPrice": "Общая стоимость",
+    "totalWattage": "Расчет мощности",
+    "recommendedPsu": "Рекомендуемый БП",
+    "clearConfig": "Очистить сборку",
+    "orderBuild": "Заказать эту сборку",
+    "testFps": "Посмотреть FPS этой сборки",
+    "compatibilityTitle": "Проверка совместимости",
+    "compatibleAll": "Все компоненты полностью совместимы! Сборка сбалансирована.",
+    "issuesDetected": "Обнаружены проблемы совместимости:",
+    "rgbToggle": "ARGB Подсветка",
+    "rgbColor": "Цвет подсветки",
+    "zoomIn": "Приблизить",
+    "zoomOut": "Отдалить",
+    "resetView": "Сбросить вид"
+  },
+  "fps": {
+    "title": "Калькулятор FPS в играх",
+    "subtitle": "Прогноз производительности в 20 самых тяжелых играх на основе вашей сборки",
+    "selectResolution": "Разрешение экрана",
+    "selectPreset": "Настройки графики",
+    "presets": {
+      "low": "Низкие (Low)",
+      "med": "Средние (Medium)",
+      "high": "Высокие (High)",
+      "ultra": "Ультра (Ultra)"
+    },
+    "resolutions": {
+      "1080p": "1080p Full HD",
+      "1440p": "1440p 2K QHD",
+      "4k": "2160p 4K UHD"
+    },
+    "currentConfig": "Текущая тестовая сборка:",
+    "noConfigNotice": "Используются эталонные компоненты. Соберите свой ПК в Конструкторе для точного расчета!",
+    "bottleneckTitle": "Баланс системы (Bottleneck)",
+    "ratings": {
+      "unplayable": "Слайд-шоу (<30 FPS)",
+      "playable": "Играбельно (30-59 FPS)",
+      "smooth": "Комфортно 60+ FPS",
+      "esports": "Киберспорт 120+ FPS"
+    },
+    "avgFps": "Средний FPS",
+    "lowFps": "1% Low FPS",
+    "searchGame": "Поиск игры...",
+    "gamesCount": "Игр в базе:"
+  },
+  "cart": {
+    "title": "Корзина покупок",
+    "emptyTitle": "Ваша корзина пуста",
+    "emptyDesc": "Выберите комплектующие в каталоге или соберите готовый ПК в конструкторе.",
+    "continueShopping": "Перейти в каталог",
+    "itemsCount": "Товаров в заказе",
+    "total": "Итого к оплате",
+    "checkout": "Перейти к оформлению",
+    "clear": "Очистить корзину"
+  },
+  "checkout": {
+    "title": "Оформление заказа и Оплата через Telegram",
+    "subtitle": "Заказ будет передан напрямую владельцу магазина в Telegram с полной спецификацией",
+    "name": "Ваше имя и фамилия",
+    "phone": "Номер телефона (Узбекистан)",
+    "tgHandle": "Ваш ник в Telegram (например @username)",
+    "address": "Адрес доставки (город, район, улица)",
+    "paymentMethod": "Способ оплаты",
+    "methods": {
+      "telegram_payme": "Telegram Pay / Click / Payme",
+      "bank_card": "Прямой перевод на карту (HUMO / UzCard / VISA)",
+      "cash_pickup": "Оплата при получении / В магазине"
+    },
+    "submitOrder": "Отправить заказ в Telegram",
+    "processing": "Отправка в Telegram...",
+    "successTitle": "Заказ успешно оформлен!",
+    "successDesc": "Детали заказа переданы владельцу в Telegram. В ближайшее время с вами свяжутся для подтверждения и отправки счета.",
+    "orderNumber": "Номер заказа",
+    "openTelegram": "Открыть Telegram бота",
+    "close": "Закрыть"
+  },
+  "admin": {
+    "hiddenTitle": "Скрытая панель управления",
+    "enterPin": "Введите пароль администратора",
+    "passwordPlaceholder": "Пароль (по умолчанию admin123)",
+    "login": "Войти в систему",
+    "logout": "Выйти",
+    "dashboard": "Дашборд",
+    "products": "Комплектующие",
+    "games": "Игры для FPS",
+    "orders": "Заказы",
+    "settings": "Настройки & Telegram",
+    "addProduct": "Добавить деталь",
+    "addGame": "Добавить игру",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "stats": {
+      "products": "Всего товаров",
+      "games": "Игр в калькуляторе",
+      "orders": "Заказов",
+      "revenue": "Оплачено"
+    },
+    "tg": {
+      "title": "Интеграция Telegram Bot",
+      "botToken": "Bot Token (от @BotFather)",
+      "ownerChatId": "Ваш Telegram Chat ID",
+      "howToGetId": "Чтобы узнать свой Chat ID, запустите вашего бота или напишите боту @userinfobot",
+      "saveSettings": "Сохранить настройки Telegram",
+      "testPing": "Отправить тестовое сообщение",
+      "testPingSuccess": "Тестовое сообщение успешно отправлено в ваш Telegram!",
+      "botConnected": "Бот активен и готов принимать заказы",
+      "botDisconnected": "Бот не настроен (укажите токен)"
+    }
+  }
+}

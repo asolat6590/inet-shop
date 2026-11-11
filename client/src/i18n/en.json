@@ -1,0 +1,169 @@
+{
+  "nav": {
+    "brand": "CYBERPULSE",
+    "catalog": "Catalog",
+    "builder": "PC Builder",
+    "fpsCalculator": "FPS Test (20 Games)",
+    "cart": "Cart",
+    "admin": "Admin Panel",
+    "secretAdmin": "Secret Entrance"
+  },
+  "hero": {
+    "badge": "Next-Gen PC Hardware in Uzbekistan",
+    "title1": "Build Your Dream Rig",
+    "title2": "with Live Assembly Visualizer",
+    "subtitle": "Interactive PC builder, real-time FPS benchmarks across 20 demanding games, full compatibility checker, and direct Telegram checkout.",
+    "startBuilding": "Open PC Builder",
+    "exploreCatalog": "Explore Hardware",
+    "testFps": "Calculate Game FPS"
+  },
+  "currency": "UZS",
+  "catalog": {
+    "title": "Hardware Components",
+    "subtitle": "Authentic components with official warranty. Prices in Uzbekistani Som (UZS).",
+    "allCategories": "All Categories",
+    "searchPlaceholder": "Search parts by model, brand...",
+    "filterBy": "Filters",
+    "priceRange": "Price Range",
+    "sortBy": "Sort By",
+    "sortNewest": "Latest Arrivals",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low",
+    "sortPerf": "Performance Tier",
+    "inStock": "In Stock",
+    "outOfStock": "On Order",
+    "addToCart": "Add to Cart",
+    "addToBuilder": "Add to Build",
+    "viewDetails": "Specifications",
+    "emptyResults": "No components found matching your filter criteria."
+  },
+  "categories": {
+    "case": "Case",
+    "cpu": "Processor (CPU)",
+    "motherboard": "Motherboard",
+    "cooler": "Cooler / AIO",
+    "ram": "RAM Memory",
+    "gpu": "Graphics Card (GPU)",
+    "storage": "M.2 NVMe / SSD",
+    "psu": "Power Supply (PSU)"
+  },
+  "builder": {
+    "title": "Interactive PC Builder",
+    "subtitle": "Assemble your custom PC component by component and inspect live visualization",
+    "visualizerTitle": "Assembly Visualizer",
+    "selectComponent": "Select Component",
+    "changeComponent": "Change",
+    "removeComponent": "Remove",
+    "emptySlot": "Not Selected",
+    "totalPrice": "Total Price",
+    "totalWattage": "Estimated Power",
+    "recommendedPsu": "Recommended PSU",
+    "clearConfig": "Clear Configuration",
+    "orderBuild": "Order This Build",
+    "testFps": "Test FPS for this Build",
+    "compatibilityTitle": "Compatibility Status",
+    "compatibleAll": "All components are fully compatible! Balanced setup.",
+    "issuesDetected": "Compatibility issues detected:",
+    "rgbToggle": "ARGB Illumination",
+    "rgbColor": "RGB Theme",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetView": "Reset View"
+  },
+  "fps": {
+    "title": "Game FPS Benchmark Calculator",
+    "subtitle": "Performance forecast across 20 heavy AAA titles tailored to your PC rig",
+    "selectResolution": "Display Resolution",
+    "selectPreset": "Graphic Settings Preset",
+    "presets": {
+      "low": "Low",
+      "med": "Medium",
+      "high": "High",
+      "ultra": "Ultra"
+    },
+    "resolutions": {
+      "1080p": "1080p Full HD",
+      "1440p": "1440p 2K QHD",
+      "4k": "2160p 4K UHD"
+    },
+    "currentConfig": "Currently Tested Rig:",
+    "noConfigNotice": "Using reference baseline parts. Assemble your rig in the Builder for custom results!",
+    "bottleneckTitle": "Bottleneck Analysis",
+    "ratings": {
+      "unplayable": "Unplayable (<30 FPS)",
+      "playable": "Playable (30-59 FPS)",
+      "smooth": "Smooth 60+ FPS",
+      "esports": "Esports High-Refresh 120+ FPS"
+    },
+    "avgFps": "Average FPS",
+    "lowFps": "1% Low FPS",
+    "searchGame": "Filter games...",
+    "gamesCount": "Games in benchmark:"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "emptyTitle": "Your Cart is Empty",
+    "emptyDesc": "Pick components from the catalog or build a custom PC in the builder.",
+    "continueShopping": "Browse Components",
+    "itemsCount": "Items in cart",
+    "total": "Grand Total",
+    "checkout": "Proceed to Telegram Checkout",
+    "clear": "Clear Cart"
+  },
+  "checkout": {
+    "title": "Telegram Bot Checkout & Payment",
+    "subtitle": "Your order will be instantly dispatched to the shop owner's Telegram account with full hardware specs",
+    "name": "Full Name",
+    "phone": "Phone Number (Uzbekistan)",
+    "tgHandle": "Telegram Username (e.g. @username)",
+    "address": "Delivery Address (City, District, Street)",
+    "paymentMethod": "Payment Option",
+    "methods": {
+      "telegram_payme": "Telegram Pay / Click / Payme",
+      "bank_card": "Direct Card Transfer (HUMO / UzCard / VISA)",
+      "cash_pickup": "Cash upon Pickup / In Store"
+    },
+    "submitOrder": "Send Order to Telegram",
+    "processing": "Dispatching to Telegram...",
+    "successTitle": "Order Placed Successfully!",
+    "successDesc": "Your order details have been forwarded to the store owner via Telegram. We will contact you momentarily to confirm and send payment receipt.",
+    "orderNumber": "Order Reference",
+    "openTelegram": "Open Telegram Bot",
+    "close": "Close"
+  },
+  "admin": {
+    "hiddenTitle": "Hidden Admin Console",
+    "enterPin": "Enter Administrator Password",
+    "passwordPlaceholder": "Password (default: admin123)",
+    "login": "Authenticate",
+    "logout": "Log Out",
+    "dashboard": "Dashboard",
+    "products": "Hardware Parts",
+    "games": "FPS Game Profiles",
+    "orders": "Customer Orders",
+    "settings": "Settings & Telegram",
+    "addProduct": "Add Part",
+    "addGame": "Add Game",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "stats": {
+      "products": "Total Parts",
+      "games": "Benchmarked Games",
+      "orders": "Total Orders",
+      "revenue": "Revenue (Paid)"
+    },
+    "tg": {
+      "title": "Telegram Bot Integration",
+      "botToken": "Bot Token (from @BotFather)",
+      "ownerChatId": "Your Telegram Chat ID",
+      "howToGetId": "To find your Chat ID, start your bot or message @userinfobot",
+      "saveSettings": "Save Telegram Settings",
+      "testPing": "Send Test Ping",
+      "testPingSuccess": "Test message sent to your Telegram successfully!",
+      "botConnected": "Bot is active and ready to receive orders",
+      "botDisconnected": "Bot is not configured (token missing)"
+    }
+  }
+}
