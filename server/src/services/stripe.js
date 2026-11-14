@@ -52,7 +52,6 @@ export async function createCheckoutSession({ orderNumber, items, totalUzs, cust
   // Attempt 1: Native UZS (zero-decimal currency)
   try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
       mode: 'payment',
       customer_email: customerEmail || undefined,
       client_reference_id: orderNumber,
@@ -82,7 +81,6 @@ export async function createCheckoutSession({ orderNumber, items, totalUzs, cust
       console.warn('[Stripe] UZS is not enabled for this Stripe account. Automatically converting to USD equivalent (1 USD = 12,800 UZS)...');
       const USD_RATE = 12800;
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
         mode: 'payment',
         customer_email: customerEmail || undefined,
         client_reference_id: orderNumber,
