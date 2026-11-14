@@ -8,6 +8,7 @@ import gamesRoutes from './routes/games.js';
 import compatibilityRoutes from './routes/compatibility.js';
 import ordersRoutes from './routes/orders.js';
 import adminRoutes from './routes/admin.js';
+import stripeRoutes from './routes/stripe.js';
 import { initTelegramBot } from './services/telegramBot.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -39,6 +40,7 @@ app.use('/api', productsRoutes);
 app.use('/api', gamesRoutes);
 app.use('/api', compatibilityRoutes);
 app.use('/api', ordersRoutes);
+app.use('/api', stripeRoutes);
 app.use('/api/admin', adminRoutes);
 
 // Health check

@@ -99,7 +99,7 @@ export function initTelegramBot() {
   }
 }
 
-function escapeHtml(text) {
+export function escapeHtml(text) {
   if (!text) return '';
   return String(text)
     .replace(/&/g, '&amp;')
@@ -110,8 +110,15 @@ function escapeHtml(text) {
 /**
  * Format currency in UZS
  */
-function formatUzs(amount) {
+export function formatUzs(amount) {
   return new Intl.NumberFormat('ru-RU').format(amount) + ' сум';
+}
+
+/**
+ * Get current bot instance
+ */
+export function getBotInstance() {
+  return initTelegramBot();
 }
 
 /**

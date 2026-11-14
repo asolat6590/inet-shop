@@ -9,6 +9,7 @@ import gamesRoutes from '../server/src/routes/games.js';
 import compatibilityRoutes from '../server/src/routes/compatibility.js';
 import ordersRoutes from '../server/src/routes/orders.js';
 import adminRoutes from '../server/src/routes/admin.js';
+import stripeRoutes from '../server/src/routes/stripe.js';
 import { initTelegramBot } from '../server/src/services/telegramBot.js';
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use('/api', productsRoutes);
 app.use('/api', gamesRoutes);
 app.use('/api', compatibilityRoutes);
 app.use('/api', ordersRoutes);
+app.use('/api', stripeRoutes);
 app.use('/api/admin', adminRoutes);
 
 // Health check

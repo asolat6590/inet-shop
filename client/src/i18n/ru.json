@@ -119,8 +119,9 @@
     "address": "Адрес доставки (город, район, улица)",
     "paymentMethod": "Способ оплаты",
     "methods": {
+      "stripe": "Банковская карта (Visa / MasterCard / Stripe)",
       "telegram_payme": "Telegram Pay / Click / Payme",
-      "bank_card": "Прямой перевод на карту (HUMO / UzCard / VISA)",
+      "bank_card": "Прямой перевод на карту (HUMO / UzCard)",
       "cash_pickup": "Оплата при получении / В магазине"
     },
     "submitOrder": "Отправить заказ в Telegram",

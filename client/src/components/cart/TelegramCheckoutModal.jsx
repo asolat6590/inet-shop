@@ -4,7 +4,7 @@ import { useShop } from '../../context/ShopContext';
 import {
   X, Send, CheckCircle2, ShieldCheck, CreditCard,
   Building, Phone, User, MapPin, AtSign, Loader2, ExternalLink,
-  UploadCloud, Image, Trash2, FileCheck
+  UploadCloud, Image, Trash2, FileCheck, Mail
 } from 'lucide-react';
 
 export default function TelegramCheckoutModal() {
@@ -29,8 +29,9 @@ export default function TelegramCheckoutModal() {
     name: '',
     phone: '+998 ',
     telegram: '',
+    email: '',
     address: '',
-    paymentMethod: 'telegram_payme'
+    paymentMethod: 'stripe'
   });
 
   const [receiptFile, setReceiptFile] = useState(null); // { name, size, base64, previewUrl }
@@ -131,6 +132,39 @@ export default function TelegramCheckoutModal() {
 
       if (!res.ok) {
         throw new Error(data.error || 'Failed to place order');
+      }
+
+      // If user selected Stripe, create checkout session and redirect to Stripe
+      if (form.paymentMethod === 'stripe') {
+        try {
+          const stripeRes = await fetch('/api/stripe/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              orderNumber: data.order.order_number,
+              items: itemsPayload,
+              totalUzs: grandTotal,
+              customerEmail: form.email,
+              customerName: form.name
+            })
+          });
+
+          const stripeData = await stripeRes.json();
+          if (stripeData.success && stripeData.url) {
+            if (!isBuilderOrder) {
+              clearCart();
+            }
+            window.location.href = stripeData.url;
+            return;
+          } else {
+            throw new Error(stripeData.error || 'Не удалось создать сессию оплаты Stripe');
+          }
+        } catch (stripeErr) {
+          console.error('Stripe redirect error:', stripeErr);
+          setErrorMessage(stripeErr.message || 'Ошибка подключения к Stripe');
+          setIsSubmitting(false);
+          return;
+        }
       }
 
       setOrderResult(data);
@@ -300,6 +334,26 @@ export default function TelegramCheckoutModal() {
                 </div>
               </div>
 
+              {/* Email (for Stripe Receipts & Notifications) */}
+              <div>
+                <label className="text-xs font-semibold text-slate-300 mb-1.5 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <Mail className="w-3.5 h-3.5 text-cyan-400" />
+                    Email (для квитанции Stripe / чека)
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-normal">
+                    {form.paymentMethod === 'stripe' ? 'Рекомендуется для Stripe' : 'Необязательно'}
+                  </span>
+                </label>
+                <input
+                  type="email"
+                  placeholder="client@example.com"
+                  value={form.email}
+                  onChange={(e) => setForm(prev => ({ ...prev, email: e.target.value }))}
+                  className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+                />
+              </div>
+
               {/* Address */}
               <div>
                 <label className="text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
@@ -323,15 +377,33 @@ export default function TelegramCheckoutModal() {
                 </label>
                 <div className="space-y-2">
                   {[
-                    { id: 'telegram_payme', label: t('checkout.methods.telegram_payme'), sub: 'Бот выставит счет Click / Payme' },
-                    { id: 'bank_card', label: t('checkout.methods.bank_card'), sub: 'Реквизиты карты HUMO / UzCard' },
-                    { id: 'cash_pickup', label: t('checkout.methods.cash_pickup'), sub: 'Оплата наличными в шоуруме' }
+                    {
+                      id: 'stripe',
+                      label: t('checkout.methods.stripe'),
+                      sub: 'Visa, MasterCard, Apple Pay, Google Pay',
+                      badge: '⚡ Быстро и безопасно'
+                    },
+                    {
+                      id: 'telegram_payme',
+                      label: t('checkout.methods.telegram_payme'),
+                      sub: 'Бот выставит счет Click / Payme'
+                    },
+                    {
+                      id: 'bank_card',
+                      label: t('checkout.methods.bank_card'),
+                      sub: 'Реквизиты карты HUMO / UzCard'
+                    },
+                    {
+                      id: 'cash_pickup',
+                      label: t('checkout.methods.cash_pickup'),
+                      sub: 'Оплата наличными в шоуруме'
+                    }
                   ].map((m) => (
                     <label
                       key={m.id}
                       className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition ${
                         form.paymentMethod === m.id
-                          ? 'bg-cyan-950/40 border-cyan-500/80 text-white'
+                          ? 'bg-cyan-950/40 border-cyan-500/80 text-white shadow-md shadow-cyan-950/40'
                           : 'bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700'
                       }`}
                     >
@@ -345,7 +417,14 @@ export default function TelegramCheckoutModal() {
                           className="text-cyan-500 focus:ring-cyan-500"
                         />
                         <div>
-                          <div className="text-xs font-bold">{m.label}</div>
+                          <div className="text-xs font-bold flex items-center gap-2">
+                            <span>{m.label}</span>
+                            {m.badge && (
+                              <span className="px-1.5 py-0.5 rounded text-[10px] bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/30">
+                                {m.badge}
+                              </span>
+                            )}
+                          </div>
                           <div className="text-[10px] text-slate-400">{m.sub}</div>
                         </div>
                       </div>
@@ -428,7 +507,14 @@ export default function TelegramCheckoutModal() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      {t('checkout.processing')}
+                      {form.paymentMethod === 'stripe'
+                        ? (i18n.language === 'en' ? 'Redirecting to Stripe...' : 'Переход к оплате Stripe...')
+                        : t('checkout.processing')}
+                    </>
+                  ) : form.paymentMethod === 'stripe' ? (
+                    <>
+                      <CreditCard className="w-4 h-4" />
+                      {i18n.language === 'en' ? `Pay with Stripe (${formatUzs(grandTotal)})` : `Оплатить через Stripe (${formatUzs(grandTotal)})`}
                     </>
                   ) : (
                     <>

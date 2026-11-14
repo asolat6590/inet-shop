@@ -10,6 +10,7 @@ import AdminView from './components/admin/AdminView';
 import CartDrawer from './components/cart/CartDrawer';
 import TelegramCheckoutModal from './components/cart/TelegramCheckoutModal';
 import ComponentPickerModal from './components/builder/ComponentPickerModal';
+import StripePaymentResultModal from './components/cart/StripePaymentResultModal';
 
 export default function App() {
   const { currentView, setCurrentView } = useShop();
@@ -47,6 +48,7 @@ export default function App() {
       <CartDrawer />
       <TelegramCheckoutModal />
       <ComponentPickerModal />
+      <StripePaymentResultModal />
 
       <Footer />
     </div>

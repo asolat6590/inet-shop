@@ -119,8 +119,9 @@
     "address": "Delivery Address (City, District, Street)",
     "paymentMethod": "Payment Option",
     "methods": {
+      "stripe": "Credit / Debit Card (Visa, MasterCard, Stripe)",
       "telegram_payme": "Telegram Pay / Click / Payme",
-      "bank_card": "Direct Card Transfer (HUMO / UzCard / VISA)",
+      "bank_card": "Direct Card Transfer (HUMO / UzCard)",
       "cash_pickup": "Cash upon Pickup / In Store"
     },
     "submitOrder": "Send Order to Telegram",

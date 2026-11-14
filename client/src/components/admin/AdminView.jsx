@@ -4,7 +4,7 @@ import { useShop } from '../../context/ShopContext';
 import {
   Lock, KeyRound, LayoutDashboard, Box, Gamepad2,
   ShoppingBag, Settings, Plus, Edit, Trash2, CheckCircle2,
-  AlertCircle, Send, RefreshCw, X, ShieldAlert, Cpu
+  AlertCircle, Send, RefreshCw, X, ShieldAlert, Cpu, CreditCard
 } from 'lucide-react';
 
 export default function AdminView() {
@@ -683,6 +683,63 @@ export default function AdminView() {
               >
                 {t('admin.tg.testPing')}
               </button>
+            </div>
+
+            {/* STRIPE PAYMENT INTEGRATION SETTINGS */}
+            <div className="pt-6 border-t border-slate-800 space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <CreditCard className="w-4 h-4 text-cyan-400" />
+                  Платежная система Stripe (Банковские карты)
+                </h3>
+                <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                  settings.stripe_secret_key
+                    ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                    : 'bg-amber-950 text-amber-400 border border-amber-800'
+                }`}>
+                  {settings.stripe_secret_key ? '● Подключен' : '○ Не настроен'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-400">
+                Введите API ключи из вашего личного кабинета Stripe (dashboard.stripe.com/apikeys). Для тестирования используйте тестовые ключи <code>sk_test_...</code> и <code>pk_test_...</code>.
+              </p>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-semibold text-slate-300 block mb-1">
+                    Stripe Secret Key (Секретный ключ)
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="sk_test_51... или sk_live_..."
+                    value={settings.stripe_secret_key || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, stripe_secret_key: e.target.value }))}
+                    className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 font-mono focus:outline-none focus:border-cyan-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-semibold text-slate-300 block mb-1">
+                    Stripe Publishable Key (Публичный ключ)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="pk_test_51... или pk_live_..."
+                    value={settings.stripe_publishable_key || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, stripe_publishable_key: e.target.value }))}
+                    className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 font-mono focus:outline-none focus:border-cyan-500"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold text-xs transition"
+                >
+                  Сохранить настройки Stripe
+                </button>
+              </div>
             </div>
           </form>
 

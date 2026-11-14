@@ -287,6 +287,12 @@ router.get('/settings', verifyAdminAuth, async (req, res) => {
     if (process.env.TELEGRAM_MANAGER_CHAT_ID || process.env.MANAGER_CHAT_ID || process.env.TG_OWNER_CHAT_ID) {
       settings.tg_owner_chat_id = process.env.TELEGRAM_MANAGER_CHAT_ID || process.env.MANAGER_CHAT_ID || process.env.TG_OWNER_CHAT_ID;
     }
+    if (process.env.STRIPE_SECRET_KEY) {
+      settings.stripe_secret_key = process.env.STRIPE_SECRET_KEY;
+    }
+    if (process.env.STRIPE_PUBLISHABLE_KEY) {
+      settings.stripe_publishable_key = process.env.STRIPE_PUBLISHABLE_KEY;
+    }
 
     res.json(settings);
   } catch (error) {
